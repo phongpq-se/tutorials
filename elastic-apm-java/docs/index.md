@@ -68,9 +68,13 @@ Besides the REST api, the application will have some scheduled backgrounds tasks
  4. Build and start containers using `docker-compose -f docker/docker-compose.yml up -d`
  5. Checking containers status using `docker-compose -f docker/docker-compose.yml ps` and you should have 5 containers: Elasticsearch, MySQL, Kibana, APM server and the java service
 
-```dockerfile
-note: to rebuild failed image you use docker compose -f docker/docker-compose.yml build
-```
+note: 
+ 1. to rebuild failed image you use `docker compose -f docker/docker-compose.yml build`
+ 2. to check logs docker container use `docker logs <container_id>`
+
+note(to remove image from docker compose)
+ 1. `docker-compose -f docker/docker-compose.yml down`
+ 2. `docker-compose -f docker/docker-compose.yml down --rmi all --volumes`
 
  ![alt-text](./images/docker-ps.png)
  
@@ -100,6 +104,7 @@ FROM docker.elastic.co/apm/apm-server:6.5.4
 COPY apm-server.yml /usr/share/apm-server/apm-server.yml
 USER root
 RUN chown root:apm-server /usr/share/apm-server/apm-server.yml
+RUN chmod go-w /usr/share/apm-server/apm-server.yml    # fix group and other not has write permission
 USER apm-server
 ```
 
