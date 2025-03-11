@@ -67,7 +67,11 @@ Besides the REST api, the application will have some scheduled backgrounds tasks
  3. `mvn package` - build Spring Boot jar file
  4. Build and start containers using `docker-compose -f docker/docker-compose.yml up -d`
  5. Checking containers status using `docker-compose -f docker/docker-compose.yml ps` and you should have 5 containers: Elasticsearch, MySQL, Kibana, APM server and the java service
- 
+
+ ```
+note: to rebuild failed image you use `docker compose -f docker/docker-compose.yml build`
+```
+
  ![alt-text](./images/docker-ps.png)
  
  If APM Server service doesn't start, it's because it uses Elasticsearch and Elasticsearch take some time to start. To solve this, just restart some containers using this command: `docker-compose -f docker/docker-compose.yml restart apm user-microservice
